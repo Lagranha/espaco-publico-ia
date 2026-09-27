@@ -1,0 +1,123 @@
+# Espaço Público IA — implantação online
+# Uso / usage:
+#   cp .env.example .env   # preencha / fill in
+#   docker compose up -d
+#
+# Serviços:
+#   caddy        HTTPS automático, proteção contra robôs e gateway para a IA pública suíça
+#   open-webui   assistente (chat), contas, acervo pesquisável (RAG), transcrição
+#   wiki         acervo vivo (Wiki.js): documentos, memória local, fichas de solução
+#   db           banco do Wiki.js (PostgreSQL)
+#   sincronizador  copia a wiki para o acervo do assistente e registra lacunas
+#   faxina       apaga conversas com mais de 30 dias (política de dados)
+
+services:
+  caddy:
+    image: caddy:2
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file: .env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./robots.txt:/srv/robots.txt:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    # A porta 8081 (gateway para a IA) NÃO é publicada: só os outros contêineres a alcançam.
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    restart: always
+    depends_on: [caddy]
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      - WEBUI_URL=https://${DOMINIO_IA}
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+      # Modelos: só a IA pública suíça, via gateway local (a chave fica no Caddy)
+      - ENABLE_OLLAMA_API=false
+      - ENABLE_OPENAI_API=true
+      - OPENAI_API_BASE_URL=http://caddy:8081/v1
+      - OPENAI_API_KEY=gateway-local
+      - DEFAULT_MODELS=${MODELO_PADRAO}
+      - TASK_MODEL_EXTERNAL=${MODELO_TAREFAS}
+      # Acervo: embeddings calculados AQUI, no servidor (o acervo não sai para indexação)
+      - RAG_EMBEDDING_ENGINE=
+      - RAG_EMBEDDING_MODEL=BAAI/bge-m3
+      - CHUNK_SIZE=1000
+      - CHUNK_OVERLAP=200
+      # Transcrição de áudio local
+      - WHISPER_MODEL=small
+      # Contas: cadastro aberto, mas cada conta fica pendente até aprovação
+      - ENABLE_SIGNUP=true
+      - DEFAULT_USER_ROLE=pending
+      # Privacidade e custo
+      - ENABLE_FORWARD_USER_INFO_HEADERS=false
+      - ENABLE_WEB_SEARCH=false
+      - ENABLE_COMMUNITY_SHARING=false
+      - ENABLE_TAGS_GENERATION=false
+      - ENABLE_AUTOCOMPLETE_GENERATION=false
+      - ENABLE_FOLLOW_UP_GENERATION=false
+
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=wiki
+      - POSTGRES_USER=wikijs
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  wiki:
+    image: ghcr.io/requarks/wiki:2
+    restart: always
+    depends_on: [db]
+    environment:
+      - DB_TYPE=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=wikijs
+      - DB_PASS=${POSTGRES_PASSWORD}
+      - DB_NAME=wiki
+
+  sincronizador:
+    image: python:3.12-slim
+    restart: always
+    depends_on: [wiki, open-webui]
+    env_file: .env
+    environment:
+      - WIKI_URL=http://wiki:3000
+      - OWUI_URL=http://open-webui:8080
+      - ESTADO=/estado/sincronizacao.json
+      - LACUNAS=/owui-data/lacunas/lacunas.jsonl
+    volumes:
+      - ../tools:/tools:ro
+      - estado:/estado
+      - open-webui:/owui-data:ro
+    command: >
+      sh -c "while true; do
+               python /tools/sincronizar_acervo.py || echo 'falha na sincronizacao';
+               sleep ${INTERVALO_SINCRONIZACAO:-3600};
+             done"
+
+  faxina:
+    image: python:3.12-slim
+    restart: always
+    depends_on: [open-webui]
+    volumes:
+      - ../tools:/tools:ro
+      - open-webui:/owui-data
+    command: >
+      sh -c "while true; do
+               python /tools/limpar_conversas.py /owui-data/webui.db --dias ${DIAS_CONVERSAS:-30} || true;
+               sleep 86400;
+             done"
+
+volumes:
+  caddy_data:
+  caddy_config:
+  open-webui:
+  db:
+  estado:

@@ -1,0 +1,61 @@
+# Espaço Público IA — Caddy
+# HTTPS automático (Let's Encrypt), proteção contra robôs de coleta e
+# gateway interno para a IA pública suíça (Public AI Inference Utility).
+
+{
+	email {$ACME_EMAIL}
+}
+
+# Proteções aplicadas aos dois sites públicos
+(protecao) {
+	header {
+		# Não indexar, não arquivar, não usar para IA; reserva de mineração de texto e dados (TDMRep)
+		X-Robots-Tag "noindex, nofollow, noarchive, noai, noimageai"
+		tdm-reservation "1"
+		Referrer-Policy "no-referrer"
+		-Server
+	}
+
+	handle /robots.txt {
+		root * /srv
+		file_server
+	}
+
+	# Robôs conhecidos de coleta para IA recebem 403 (o login já barra os demais)
+	@robos_ia header_regexp ua User-Agent (?i)(GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|anthropic-ai|Claude-Web|CCBot|Google-Extended|GoogleOther|PerplexityBot|Bytespider|Amazonbot|Applebot-Extended|meta-externalagent|FacebookBot|cohere-ai|Diffbot|omgili|ImagesiftBot|Timpibot|YouBot)
+	handle @robos_ia {
+		respond "Acesso negado a robôs de coleta." 403
+	}
+}
+
+# Assistente (Open WebUI)
+{$DOMINIO_IA} {
+	import protecao
+	handle {
+		reverse_proxy open-webui:8080
+	}
+}
+
+# Acervo vivo (Wiki.js)
+{$DOMINIO_ACERVO} {
+	import protecao
+	handle {
+		reverse_proxy wiki:3000
+	}
+}
+
+# Gateway interno para a IA pública (não publicado fora do Docker).
+# Vantagens: a chave da API fica só aqui; o IP e os dados dos usuários não são repassados;
+# trocar de provedor = mudar este bloco (plano de saída).
+:8081 {
+	reverse_proxy https://api.publicai.co {
+		header_up Host api.publicai.co
+		header_up Authorization "Bearer {$PUBLICAI_API_KEY}"
+		header_up User-Agent "EspacoPublicoIA/1.0 (+{$CONTATO})"
+		header_up -X-Forwarded-For
+		header_up -X-Forwarded-Host
+		header_up -X-Forwarded-Proto
+		header_up -X-Real-IP
+		header_up -Cookie
+	}
+}
