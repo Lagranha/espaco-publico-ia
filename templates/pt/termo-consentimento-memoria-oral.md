@@ -22,6 +22,10 @@ Eu, ______________________________________ (nome), concordo em conceder uma entr
 - [ ] **Pesquisa:** só para pesquisa, mediante pedido ao conselho do acervo.
 - [ ] **Anônimo:** meu nome e dados que me identifiquem serão retirados.
 
+**Modelo de IA próprio do Espaço (opcional, marque só se concordar):**
+
+- [ ] Autorizo que a transcrição seja usada para ajustar um modelo de IA **próprio do Espaço**, sob controle do conselho do acervo, rodando em infraestrutura pública, **nunca para uso comercial nem cedido a empresas**. Posso retirar esta autorização a qualquer momento; o conselho então exclui o conteúdo de treinos futuros.
+
 ## 4. Meus direitos
 
 - Posso **retirar a gravação e a transcrição** do acervo a qualquer momento, sem justificativa, falando com a equipe ou pelo contato abaixo.

@@ -32,6 +32,15 @@ O passo que resolveu, com o máximo de detalhe prático: canal, documento pedido
 
 - 
 
+## 6. Isso afeta outras pessoas?
+
+*(Campo do experimento "Do individual ao coletivo". Opcional.)*
+
+- [ ] Não, foi um caso só meu.
+- [ ] Sim, outras pessoas passam pelo mesmo. Quem mais? (bairro, grupo, serviço): 
+- Encaminhar para: [ ] associação de moradores [ ] conselho municipal [ ] ouvidoria [ ] câmara [ ] outro: 
+- Encaminhado em ___/___ por: 
+
 ---
 
 **Crédito:** [nome ou apelido, se quiser; ou "anônimo"]

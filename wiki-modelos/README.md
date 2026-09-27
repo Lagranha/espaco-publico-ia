@@ -12,6 +12,7 @@
 | `lacunas` | Lacunas públicas (perguntas sem resposta, revisadas) | Não | Curadores |
 | `curadoria/...` | Área interna (lacunas brutas, canários, atas) | Não | Só curadores leem |
 | `atividades/...` | Trilhas e atividades para fazer em casa | Não | Mediadores |
+| `experimentos/...` | Registros de experimentos (proposta e resultados) | Não | Quem propõe; mediadores |
 
 O sincronizador (`tools/sincronizar_acervo.py`) só envia ao assistente as páginas **publicadas** em `oficial/`, `memoria/` e `fichas/` (exceto `fichas/rascunhos/`).
 

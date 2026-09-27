@@ -22,6 +22,10 @@ I, ______________________________________ (name), agree to give an interview to 
 - [ ] **Research:** only for research, on request to the archive council.
 - [ ] **Anonymous:** my name and identifying details will be removed.
 
+**The Espaço's own AI model (optional, tick only if you agree):**
+
+- [ ] I authorize the transcript to be used to fine-tune an AI model **owned by the Espaço**, under the archive council's control, running on public infrastructure, **never for commercial use or given to companies**. I may withdraw this authorization at any time; the council then excludes the content from future training.
+
 ## 4. My rights
 
 - I may **withdraw the recording and transcript** from the archive at any time, without giving a reason, by contacting the staff below.

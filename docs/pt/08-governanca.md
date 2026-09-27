@@ -16,7 +16,10 @@ O conselho decide sobre:
 - a licença do acervo e autorizações excepcionais de uso;
 - o provedor e o modelo de IA, com base nos testes e na revisão semestral dos termos;
 - limites de uso e aprovação de contas;
-- resposta a violações (uso indevido, canários encontrados).
+- resposta a violações (uso indevido, canários encontrados);
+- aprovação dos **riscos** de experimentos (dados, segurança, licença), sem julgar o mérito de antemão, e guarda dos registros (ver [ecologia de experimentos](10-ecologia-de-experimentos.md)).
+
+As regras do conselho não são fixas: o que os experimentos revelam sobre o uso real pode e deve mudá-las.
 
 ## Privacidade (LGPD)
 

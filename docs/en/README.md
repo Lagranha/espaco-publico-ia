@@ -9,3 +9,4 @@
 7. [Activities from home](07-activities.md): critical awareness that also improves the archive
 8. [Governance and data protection](08-governance.md)
 9. [Pilot and costs](09-pilot-and-costs.md)
+10. [An ecology of experiments](10-experiment-ecology.md): try, observe, keep, modify or abandon

@@ -17,6 +17,7 @@ Um **acervo vivo da cidade**, online e gratuito, com um assistente de inteligên
 - **Acervo protegido:** tudo atrás de login, licença de guarda comunitária que proíbe treinar IA com o conteúdo, bloqueio de robôs e **frases-canário** para detectar uso indevido.
 - **IA pública, dependência mínima:** o acervo, as contas e o índice de busca ficam no servidor do projeto; só a pergunta e os trechos necessários vão para a IA suíça, sem identificar quem perguntou.
 - **Consciência crítica em casa:** atividades de checagem e leitura crítica que também melhoram o acervo, e uma roda online mensal.
+- **Uma ecologia de experimentos, não uma receita:** cada espaço testa variações em ciclos curtos (modo biblioteca sem chat, assistente que só pergunta, modelo ajustado com o acervo local, uso sem IA) e registra o que as pessoas passaram a conseguir fazer. Veja [ecologia de experimentos](docs/pt/10-ecologia-de-experimentos.md).
 
 ```
 navegador → Caddy (HTTPS, anti-robôs) → Open WebUI (assistente) + Wiki.js (acervo)
@@ -34,7 +35,7 @@ navegador → Caddy (HTTPS, anti-robôs) → Open WebUI (assistente) + Wiki.js (
 | [`tools/`](tools/) | Sincronização wiki→assistente, filtros de lacunas e de limite diário, faxina de conversas, canários, avaliação de modelos |
 | [`prompts/pt/`](prompts/pt/) | Instruções dos assistentes |
 | [`wiki-modelos/`](wiki-modelos/) | Estrutura da wiki, modelo de ficha de solução, página inicial, lacunas |
-| [`templates/pt/`](templates/pt/) | Licença do acervo, termos de uso, política de dados, termo de consentimento |
+| [`templates/pt/`](templates/pt/) | Licença do acervo, termos de uso, política de dados, termo de consentimento, registro de experimento |
 
 ### Comece por aqui
 
@@ -65,6 +66,7 @@ It is the online version of the [Laboratório Público de IA](https://github.com
 - **A protected archive:** everything behind login, a community guardianship license forbidding AI training on the content, bot blocking and **canary phrases** to detect misuse.
 - **Public AI, minimal dependence:** archive, accounts and search index stay on the project's server; only the question and needed passages go to the Swiss AI, without identifying who asked.
 - **Critical awareness from home:** checking and critical-reading activities that also improve the archive, plus a monthly online circle.
+- **An ecology of experiments, not a recipe:** each space tests variations in short cycles (library mode without chat, question-only assistant, a model fine-tuned on the local archive, no-AI use) and records what people became able to do. See [experiment ecology](docs/en/10-experiment-ecology.md).
 
 ### What's here
 
@@ -75,7 +77,7 @@ It is the online version of the [Laboratório Público de IA](https://github.com
 | [`tools/`](tools/) | Wiki→assistant sync, gap and daily-limit filters, conversation cleanup, canaries, model evaluation |
 | [`prompts/en/`](prompts/en/) | Assistant instructions |
 | [`wiki-modelos/`](wiki-modelos/) | Wiki structure, solution record template, home page, gaps |
-| [`templates/en/`](templates/en/) | Archive license, terms of use, data policy, consent form |
+| [`templates/en/`](templates/en/) | Archive license, terms of use, data policy, consent form, experiment log |
 
 ### Start here
 

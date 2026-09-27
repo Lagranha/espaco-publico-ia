@@ -16,7 +16,10 @@ The council decides on:
 - the archive license and exceptional authorizations;
 - the AI provider and model, based on tests and a six-monthly review of terms;
 - usage limits and account approval;
-- responses to violations (misuse, canaries found).
+- responses to violations (misuse, canaries found);
+- approving the **risks** of experiments (data, safety, license), without judging merit in advance, and keeping the logs (see [experiment ecology](10-experiment-ecology.md)).
+
+The council's rules are not fixed: what experiments reveal about real use can and should change them.
 
 ## Privacy
 

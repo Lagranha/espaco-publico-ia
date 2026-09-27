@@ -9,3 +9,4 @@
 7. [Atividades em casa](07-atividades.md): consciência crítica que também melhora o acervo
 8. [Governança e LGPD](08-governanca.md)
 9. [Piloto e custos](09-piloto-e-custos.md)
+10. [Ecologia de experimentos](10-ecologia-de-experimentos.md): testar, observar, manter, modificar ou abandonar
